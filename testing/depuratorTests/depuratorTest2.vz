@@ -1,0 +1,10 @@
+DE 0 HASTA 10 {
+IMPRIMIR ( "Loloollol 123" )
+}
+12variable
+a
+MIENTRAS i > 10 {
+cont = cont + 3.14 * 12
+i = i + 1
+}
+IMPRIMIR ( " FIN DE PROGRAMA" )

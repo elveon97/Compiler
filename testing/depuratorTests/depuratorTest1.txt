@@ -1,0 +1,9 @@
+DE 0 HASTA 10 {
+  IMPRIMIR ( "Loloollol 123" )
+}     //      esto no
+12variable
+MIENTRAS i > 10 {
+  cont = cont + 3.14 * 12       //aca tampoco
+  i = i + 1
+}
+IMPRIMIR ( "FIN DE PROGRAMA" )
