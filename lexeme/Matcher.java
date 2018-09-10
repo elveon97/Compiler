@@ -2,18 +2,20 @@ package lexeme;
 
 import java.util.regex.Pattern;
 
-class Matcher {
-  final static String RESERVED[] = {"DE", "HASTA", "MIENTRAS", "SI",
+public class Matcher {
+  public final static String RESERVED[] = {"DE", "HASTA", "MIENTRAS", "SI",
                                     "CONTRARIO", "IMPRIMIR"};
-  final static String INTEGER = "[0-9]+?";
-  final static String REAL = "([\\d]+?)|([\\d]+?\\.[\\d]+?)";
-  final static String VARIABLE = "[a-z|A-Z]{1}[a-z|A-Z|0-9|\\_|\\-]*";
-  final static String ARITHMETIC = "\\+|\\-|\\*|\\/";
-  final static String ASSIGNMENT = "\\=";
-  final static String PARENTHESIS = "\\(|\\)";
-  final static String BRACES = "\\{|\\}";
-  final static String LOGICAL = "\\<|\\>|\\<=\\>=\\!=\\&&|\\==|(\\|\\|)";
-  final static String STRING = "\\\"[^\\\"]*\\\"";  
+  public final static String INTEGER = "[0-9]+?";
+  public final static String REAL = "([\\d]+?)|([\\d]+?\\.[\\d]+?)";
+  public final static String VARIABLE = "[a-z|A-Z]{1}[a-z|A-Z|0-9|\\_|\\-]*";
+  public final static String ARITHMETIC = "\\+|\\-|\\*|\\/";
+  public final static String ASSIGNMENT = "\\=";
+  public final static String PARENTHESIS = "\\(|\\)";
+  public final static String BRACES = "\\{|\\}";
+  public final static String LOGICAL = "\\<|\\>|\\<=\\>=\\!=\\&&|\\==|(\\|\\|)|,";
+  public final static String STRING = "\\\"[^\\\"]*\\\"";
+  public final static String VARTYPES = "INT|STRING|REAL|BOOLEAN";
+  public final static String BOOLEAN = "TRUE|FALSE";
 
   public static boolean match(String word, String regex) {
     if (regex.equalsIgnoreCase("RESERVED")) {
@@ -36,6 +38,7 @@ class Matcher {
       case "BRACES": return BRACES;
       case "LOGICAL": return LOGICAL;
       case "STRING": return STRING;
+      case "VARTYPES": return VARTYPES;
     }
     return null;
   }

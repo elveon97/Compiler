@@ -13,11 +13,11 @@ import java.util.ArrayList;
  *  in a static ArrayList.
  */
 public class Line {
-  private String line;
+  public String line;
   private static ArrayList<Line> lines = new ArrayList<Line>();
   private int index;
   char operators[] = {'+', '-', '/', '*', '>', '<', '=', '{', '}',
-                      '(', ')'};
+                      '(', ')', ','};
   static int globalIndex = 0;
 
   /**
@@ -72,7 +72,7 @@ public class Line {
     while(scanner.hasNext()) {
       newLine += scanner.next()+" ";
     }
-    line = newLine.trim();
+    line = newLine.trim();    
   }
 
   /**
