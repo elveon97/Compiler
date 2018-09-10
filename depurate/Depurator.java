@@ -29,6 +29,10 @@ public class Depurator {
     if (input == null) return false;
 
     for (String aux: input) {
+      if (aux.equals("")) {
+        Line.globalIndex++;
+        continue;
+      }
       line = new Line(aux);
       output.add(line.getDepuredLine());
     }

@@ -4,5 +4,6 @@ Real var7
 REAL var7
 BOOLEAN var3 = TRUE
 REAL var4 = TRUE
+
 var1 = asdasd
 var1 = 10

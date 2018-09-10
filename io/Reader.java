@@ -47,8 +47,7 @@ public class Reader {
     depurate.Line line;
     try {
       while ((input = bf.readLine()) != null) {
-        input = input.trim();
-        if (input.equals("")) continue;
+        input = input.trim();        
         lines.add(input);
       }
       return lines;
