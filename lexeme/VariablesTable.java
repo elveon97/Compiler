@@ -63,13 +63,13 @@ public class VariablesTable {
   }
 
   public void printTable() {
-    System.out.println(" _________________________________________________________________");
-    System.out.println("| ID  | TYPE         | NAME         | VALUE        | READABLE     |");
-    System.out.println("|-----|--------------|--------------|--------------|--------------|");
+    System.out.println(" ____________________________________________________________________________________________________________________");
+    System.out.println("| ID  | TYPE         | NAME         | VALUE                                                          | READABLE     |");
+    System.out.println("|-----|--------------|--------------|----------------------------------------------------------------|--------------|");
     for (Register r: variables) {
       System.out.println(r);
     }
-    System.out.println("|_____|______________|______________|______________|______________|");
+    System.out.println("|_____|______________|______________|________________________________________________________________|______________|");
   }
 
   class Register {
@@ -86,9 +86,9 @@ public class VariablesTable {
       aux += " | "+name;
       while (aux.length()<35) aux+= " ";
       aux += " | "+value;
-      while (aux.length()<50) aux+= " ";
+      while (aux.length()<100) aux+= " ";
       aux += " | "+readable;
-      while (aux.length()<65) aux+= " ";
+      while (aux.length()<115) aux+= " ";
       return aux+=" |";
     }
 

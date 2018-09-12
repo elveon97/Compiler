@@ -31,6 +31,7 @@ public class Analyser {
 
     for (String i: arr) {
       Lexeme lexeme = LexemeFactory.getLexeme(i);
+      System.out.println(lexeme);
       LexemeTable.getInstance().addLexeme(line.getIndex(), lexeme);
     }
 
@@ -51,6 +52,11 @@ public class Analyser {
       case "BOOLEAN":
         System.out.println("Checking Boolean declaration...");
         path = "automatons/serialized/DeclarationBoolean.ser";
+        checkDeclaration(path, arr, line.getIndex());
+        return;
+      case "STRING":
+        System.out.println("Checking String declaration...");
+        path = "automatons/serialized/DeclarationString.ser";
         checkDeclaration(path, arr, line.getIndex());
         return;
     }

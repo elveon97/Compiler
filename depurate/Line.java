@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *  in a static ArrayList.
  */
 public class Line {
-  public String line;
+  public String line, depuredLine;
   private static ArrayList<Line> lines = new ArrayList<Line>();
   private int index;
   char operators[] = {'+', '-', '/', '*', '>', '<', '=', '{', '}',
@@ -27,6 +27,7 @@ public class Line {
   public Line(String input) {
     line = input;
     index = ++globalIndex;
+    depureLine();
     lines.add(this);
   }
 
@@ -35,8 +36,7 @@ public class Line {
    *  @return Depured line object.
    */
   public String getDepuredLine() {
-    depureLine();
-    return line;
+    return depuredLine;
   }
 
   /**
@@ -49,7 +49,16 @@ public class Line {
   private void depureLine() {
     System.out.println("Depuring line #"+index+"...");
 
-    String words[] = line.split(" ");
+    String aux = line;
+    String stringLit[] = getStringLiterals(aux);
+    if (stringLit != null) {
+      for (String i: stringLit) {
+        String token = i.replace(" ", "#SPC");
+        aux = aux.replace(i, token);
+      }
+    }
+
+    String words[] = aux.split(" ");
     for (int i=0; i<words.length; i++) {
       words[i] = words[i].trim();
     }
@@ -72,7 +81,35 @@ public class Line {
     while(scanner.hasNext()) {
       newLine += scanner.next()+" ";
     }
-    line = newLine.trim();    
+    depuredLine = newLine.trim();
+  }
+
+  private static String[] getStringLiterals(String cad) {
+    boolean ban = false;
+    String aux = "";
+
+    ArrayList<String> list = new ArrayList<String>();
+    for (int i=0; i<cad.length(); i++) {
+      if (cad.charAt(i)=='$') {
+        if (ban) {
+          ban = false;
+          list.add(aux);
+          aux = "";
+        } else {
+          ban = true;
+          continue;
+        }
+      }
+      if (ban) aux += cad.charAt(i);
+    }
+
+    if (list.size() == 0) return null;
+
+    String arr[] = new String[list.size()];
+    for (int i=0; i<arr.length; i++) {
+      arr[i] = list.get(i);
+    }
+    return arr;
   }
 
   /**

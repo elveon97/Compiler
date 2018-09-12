@@ -13,7 +13,7 @@ public class Matcher {
   public final static String PARENTHESIS = "\\(|\\)";
   public final static String BRACES = "\\{|\\}";
   public final static String LOGICAL = "\\<|\\>|\\<=\\>=\\!=\\&&|\\==|(\\|\\|)|,";
-  public final static String STRING = "\\\"[^\\\"]*\\\"";
+  public final static String STRING = "\\$[^\\\"]*\\$";
   public final static String VARTYPES = "INT|STRING|REAL|BOOLEAN";
   public final static String BOOLEAN = "TRUE|FALSE";
 
