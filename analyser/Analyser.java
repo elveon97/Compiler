@@ -59,6 +59,11 @@ public class Analyser {
         path = "automatons/serialized/DeclarationString.ser";
         checkDeclaration(path, arr, line.getIndex());
         return;
+      case "CHAR":
+        System.out.println("Checking String declaration...");
+        path = "automatons/serialized/DeclarationChar.ser";
+        checkDeclaration(path, arr, line.getIndex());
+        return;
     }
 
     // ASSIGNMENT

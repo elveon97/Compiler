@@ -1,1 +1,2 @@
-STRING var1 = $Como estas goku $
+STRING var1 = $Como estas goku $, var2 = $Papa$
+CHAR var3 = 'd'

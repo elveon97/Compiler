@@ -16,6 +16,7 @@ public class Matcher {
   public final static String STRING = "\\$[^\\\"]*\\$";
   public final static String VARTYPES = "INT|STRING|REAL|BOOLEAN";
   public final static String BOOLEAN = "TRUE|FALSE";
+  public final static String CHAR = "\\'[^\\\"]{1}\\'";  
 
   public static boolean match(String word, String regex) {
     if (regex.equalsIgnoreCase("RESERVED")) {
@@ -39,6 +40,7 @@ public class Matcher {
       case "LOGICAL": return LOGICAL;
       case "STRING": return STRING;
       case "VARTYPES": return VARTYPES;
+      case "CHAR": return CHAR;
     }
     return null;
   }

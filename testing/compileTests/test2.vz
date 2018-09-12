@@ -1,1 +1,2 @@
-STRING var1 = $Como#SPCestas#SPCgoku#SPC$
+STRING var1 = $Como#SPCestas#SPCgoku#SPC$ , var2 = $Papa$
+CHAR var3 = 'd'
