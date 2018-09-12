@@ -1,2 +1,5 @@
 STRING var1 = $Como estas goku $, var2 = $Papa$
 CHAR var3 = 'd'
+
+var1 = $Cambio de valor$
+var3 = '9'

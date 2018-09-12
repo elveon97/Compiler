@@ -1,2 +1,4 @@
 STRING var1 = $Como#SPCestas#SPCgoku#SPC$ , var2 = $Papa$
 CHAR var3 = 'd'
+var1 = $Cambio#SPCde#SPCvalor$
+var3 = '9

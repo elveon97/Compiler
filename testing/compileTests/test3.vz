@@ -1,0 +1,18 @@
+
+INT int1 , int2
+REAL real1
+CHAR char1
+BOOLEAN bool1
+STRING str1
+
+INT int3 = 15 , int4 = 16
+REAL real2 = 3.141516
+CHAR char2 = 'A'
+BOOLEAN bool2 = FALSE
+STRING str2 = $Hola#SPCMundo$ , str3 = $Prueba#SPCStr$
+
+int1 = 13
+real1 = 15.5
+char1 = '@'
+bool1 = TRUE
+str1 = $Cadenita#SPCde#SPCCarmen$

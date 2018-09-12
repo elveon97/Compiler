@@ -28,6 +28,7 @@ public class LexemeFactory {
     if (Matcher.match(word, "BRACES")) return new Lexeme(word, "BRACES");
     if (Matcher.match(word, "LOGICAL")) return new Lexeme(word, "LOGICAL");
     if (Matcher.match(word, "CHAR")) return new Lexeme(word, "CHAR");
+    if (Matcher.match(word, "BOOLEAN")) return new Lexeme(word, "BOOLEAN");
     if (Matcher.match(word, "VARIABLE")) return new Lexeme(word, "VARIABLE");
     return new Lexeme(word, "ERROR");
   }

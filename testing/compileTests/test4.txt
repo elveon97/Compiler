@@ -1,0 +1,2 @@
+BOOLEAN bool1
+bool1 = TRUE

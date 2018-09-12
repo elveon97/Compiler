@@ -75,11 +75,19 @@ public class Analyser {
             checkAssignation(path, arr, line.getIndex());
             break;
           case "REAL":
-            path = "automatons/serialized/AssignationInt.ser";
+            path = "automatons/serialized/AssignationReal.ser";
             checkAssignation(path, arr, line.getIndex());
             break;
           case "BOOLEAN":
-            path = "automatons/serialized/AssignationInt.ser";
+            path = "automatons/serialized/AssignationBoolean.ser";
+            checkAssignation(path, arr, line.getIndex());
+            break;
+          case "STRING":
+            path = "automatons/serialized/AssignationString.ser";
+            checkAssignation(path, arr, line.getIndex());
+            break;
+          case "CHAR":
+            path = "automatons/serialized/AssignationChar.ser";
             checkAssignation(path, arr, line.getIndex());
             break;
         }
