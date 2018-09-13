@@ -68,8 +68,8 @@ public class Analyser {
 
     // ASSIGNMENT
     if (lexeme.Matcher.match(arr[0], "VARIABLE")) {
-      if(VariablesTable.variableExists(arr[0])) {
-        switch (VariablesTable.getVariableType(arr[0])) {
+      if(VariablesTable.getInstance().variableExists(arr[0])) {
+        switch (VariablesTable.getInstance().getVariableType(arr[0])) {
           case "INT":
             path = "automatons/serialized/AssignationInt.ser";
             checkAssignation(path, arr, line.getIndex());
@@ -101,7 +101,7 @@ public class Analyser {
     Automaton automaton = (Automaton) Deserializer.deserializeObject(path);
     if (automaton.evaluate(arr)) {
       System.out.println("CORRECT DECLARATION");
-      if (VariablesTable.variableExists(arr[0])) {
+      if (VariablesTable.getInstance().variableExists(arr[0])) {
         ErrorHandler.addError(line, 2, arr[0]);
         return;
       }
@@ -117,7 +117,7 @@ public class Analyser {
     Automaton automaton = (Automaton) Deserializer.deserializeObject(path);
     if (automaton.evaluate(arr)) {
       System.out.println("CORRECT ASSIGNMENT");
-      VariablesTable.setValue(arr[0], arr[2]);
+      VariablesTable.getInstance().setValue(arr[0], arr[2]);
     }
     else  {
       System.out.println("INCORRECT DECLARATION");

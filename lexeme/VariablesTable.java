@@ -2,14 +2,15 @@ package lexeme;
 
 import java.util.ArrayList;
 import io.ErrorHandler;
+import list.List;
 
 public class VariablesTable {
-  private ArrayList<Register> variables;
+  private static List variables;
   private static VariablesTable table;
   private static int count = 0;
 
   private VariablesTable() {
-    variables = new ArrayList<Register>();
+    variables = new List();
   }
 
   public static VariablesTable getInstance() {
@@ -18,20 +19,26 @@ public class VariablesTable {
   }
 
   public static boolean variableExists(String name) {
-    for (Register r: getInstance().variables) {
+    Object arr[] = variables.toArray();
+    for (Object o: arr) {
+      Register r = (Register)o;
       if (r.getName().equals(name)) return true;
     }
     return false;
   }
 
   public static void setValue(String name, String value) {
-    for (Register r: getInstance().variables) {
+    Object arr[] = variables.toArray();
+    for (Object o: arr) {
+      Register r = (Register)o;
       if (r.getName().equals(name)) r.setValue(value);
     }
   }
 
   public static String getVariableType(String name) {
-    for (Register r: getInstance().variables) {
+    Object arr[] = variables.toArray();
+    for (Object o: arr) {
+      Register r = (Register)o;
       if (r.getName().equals(name)) return r.getType();
     }
     return null;
@@ -66,7 +73,9 @@ public class VariablesTable {
     System.out.println(" ____________________________________________________________________________________________________________________");
     System.out.println("| ID  | TYPE         | NAME         | VALUE                                                          | READABLE     |");
     System.out.println("|-----|--------------|--------------|----------------------------------------------------------------|--------------|");
-    for (Register r: variables) {
+    Object arr[] = variables.toArray();
+    for (Object o: arr) {
+      Register r = (Register)o;
       System.out.println(r);
     }
     System.out.println("|_____|______________|______________|________________________________________________________________|______________|");
