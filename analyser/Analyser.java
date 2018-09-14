@@ -9,6 +9,7 @@ import lexeme.Lexeme;
 import lexeme.LexemeTable;
 import lexeme.LexemeFactory;
 import lexeme.VariablesTable;
+import lexeme.Matcher;
 import automatons.Automaton;
 import io.serialization.Deserializer;
 import io.ErrorHandler;
@@ -38,32 +39,52 @@ public class Analyser {
     String path;
     Automaton automaton;
     // DECLARATION
-    switch (arr[0]) {
-      case "INT":
-        System.out.println("Checking Integer declaration...");
-        path = "automatons/serialized/DeclarationInt.ser";
-        checkDeclaration(path, arr, line.getIndex());
-        return;
-      case "REAL":
-        System.out.println("Checking Real declaration...");
-        path = "automatons/serialized/DeclarationReal.ser";
-        checkDeclaration(path, arr, line.getIndex());
-        return;
-      case "BOOLEAN":
-        System.out.println("Checking Boolean declaration...");
-        path = "automatons/serialized/DeclarationBoolean.ser";
-        checkDeclaration(path, arr, line.getIndex());
-        return;
-      case "STRING":
-        System.out.println("Checking String declaration...");
-        path = "automatons/serialized/DeclarationString.ser";
-        checkDeclaration(path, arr, line.getIndex());
-        return;
-      case "CHAR":
-        System.out.println("Checking String declaration...");
-        path = "automatons/serialized/DeclarationChar.ser";
-        checkDeclaration(path, arr, line.getIndex());
-        return;
+    if (Matcher.match(arr[0], "VARTYPES")) {
+      switch (arr[0]) {
+        case "INT":
+          System.out.println("Checking Integer declaration...");
+          path = "automatons/serialized/DeclarationInt.ser";
+          checkDeclaration(path, arr, line.getIndex());
+          return;
+        case "REAL":
+          System.out.println("Checking Real declaration...");
+          path = "automatons/serialized/DeclarationReal.ser";
+          checkDeclaration(path, arr, line.getIndex());
+          return;
+        case "BOOLEAN":
+          System.out.println("Checking Boolean declaration...");
+          path = "automatons/serialized/DeclarationBoolean.ser";
+          checkDeclaration(path, arr, line.getIndex());
+          return;
+        case "STRING":
+          System.out.println("Checking String declaration...");
+          path = "automatons/serialized/DeclarationString.ser";
+          checkDeclaration(path, arr, line.getIndex());
+          return;
+        case "CHAR":
+          System.out.println("Checking String declaration...");
+          path = "automatons/serialized/DeclarationChar.ser";
+          checkDeclaration(path, arr, line.getIndex());
+          return;
+      }
+    }
+
+
+    // RESERVED
+    if (Matcher.match(arr[0], "RESERVED")) {
+      switch(arr[0]) {
+        case "READ":
+          System.out.println("Checking READ...");
+          path = "automatons/serialized/Read.ser";
+          if (checkRead(path, arr, line.getIndex())) {
+            if (VariablesTable.getInstance().variableExists(arr[1])) {
+              // AQUI SE LEE LA VARIABLE
+            } else {
+              ErrorHandler.addError(line.getIndex(), 6, arr[1]);
+            }
+          }
+          return;
+      }
     }
 
     // ASSIGNMENT
@@ -122,6 +143,19 @@ public class Analyser {
     else  {
       System.out.println("INCORRECT DECLARATION");
       ErrorHandler.addError(line, 4, arr[0]);
+    }
+  }
+
+  private static boolean checkRead(String path, String[] arr, int line) {
+    Automaton automaton = (Automaton) Deserializer.deserializeObject(path);
+    if (automaton.evaluate(arr)) {
+      System.out.println("CORRECT READ SYNTAX");
+      return true;
+    }
+    else  {
+      System.out.println("INCORRECT READ SYNTAX");
+      ErrorHandler.addError(line, 5, "");
+      return false;
     }
   }
 }
