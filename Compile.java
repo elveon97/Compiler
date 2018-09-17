@@ -31,6 +31,6 @@ class Compile {
 
     LexemeTable.getInstance().printTable();
     VariablesTable.getInstance().printTable();
-    ErrorHandler.printErrors();
+    ErrorHandler.printErrors();    
   }
 }

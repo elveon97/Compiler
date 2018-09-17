@@ -18,6 +18,7 @@ public class AssignationString {
     n3.setTransitions(new Transition[]{t3});
 
     Automaton automaton = new Automaton(n1);
+    System.out.println(automaton.evaluate(new String[]{"bol1", "=", "$str  ,$"}));
     io.serialization.Serializer.serialize(automaton, "automatons/serialized/AssignationString.ser");
   }
 }

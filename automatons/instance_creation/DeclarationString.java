@@ -24,7 +24,7 @@ public class DeclarationString {
     n4.setTransitions(new Transition[]{t5});
 
     Automaton automaton = new Automaton(n1);
-    //System.out.println(automaton.evaluate(new String[]{"BOOLEAN", "bol1", "=", "TRUE"}));
+    //System.out.println(automaton.evaluate(new String[]{"STRING", "bol1", "=", "$str$"}));
     io.serialization.Serializer.serialize(automaton, "automatons/serialized/DeclarationString.ser");
   }
 }

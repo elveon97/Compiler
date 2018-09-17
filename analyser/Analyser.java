@@ -29,6 +29,12 @@ public class Analyser {
    */
   public static void Analyse(Line line) {
     String arr[] = line.getDepuredLine().split(" ");
+    System.out.println();
+    System.out.print("ANALYSING: ");
+    for (String i: arr) {
+      System.out.print(i+" ");
+    }
+    System.out.println();
 
     for (String i: arr) {
       Lexeme lexeme = LexemeFactory.getLexeme(i);
@@ -82,6 +88,14 @@ public class Analyser {
             } else {
               ErrorHandler.addError(line.getIndex(), 6, arr[1]);
             }
+          }
+          return;
+        case "PRINT":
+          System.out.println("Checking PRINT...");
+          path = "automatons/serialized/Print.ser";
+          if (checkPrint(path, arr, line.getIndex())) {
+            // ANALIZAR EXPRESION DE PRINT
+            analysePrint(arr, line.getIndex());
           }
           return;
       }
@@ -156,6 +170,41 @@ public class Analyser {
       System.out.println("INCORRECT READ SYNTAX");
       ErrorHandler.addError(line, 5, "");
       return false;
+    }
+  }
+
+  private static boolean checkPrint(String path, String[] arr, int line) {
+    Automaton automaton = (Automaton) Deserializer.deserializeObject(path);
+    if (automaton.evaluate(arr)) {
+      System.out.println("CORRECT PRINT SYNTAX");
+      return true;
+    }
+    else  {
+      System.out.println("INCORRECT PRINT SYNTAX");
+      ErrorHandler.addError(line, 7, "");
+      return false;
+    }
+  }
+
+  private static void analysePrint(String[] arr, int line) {
+    if (arr.length == 4) { // PRINT (X)
+      if (!VariablesTable.variableExists(arr[2])) {
+        ErrorHandler.addError(line, 8, arr[2]);
+      }
+    } else { // PRINT ( $CAD$, Var1, var2, ... , varN)
+      // PRINT ( CAD , VAR1 , var2 )
+      int noVariables = arr.length/2-2;
+      int variablesInString = arr[2].split("%v").length-1;
+      if (noVariables != variablesInString) {
+        ErrorHandler.addError(line, 9, "");
+        return;
+      }
+
+      for (int i=4; i<arr.length; i+=2) {
+        if (!VariablesTable.getInstance().variableExists(arr[i])) {
+          ErrorHandler.addError(line, 8, arr[i]);
+        }
+      }
     }
   }
 }

@@ -1,0 +1,3 @@
+INT var2 , var3
+PRINT ( $Poner#SPCvariables#SPCaqui:#SPC%v#SPC%v$ , var2 , var3 )
+PRINT ( $Var2=%vVar7=%v$ , var2 , var3 )

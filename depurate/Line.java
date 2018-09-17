@@ -54,7 +54,7 @@ public class Line {
     if (stringLit != null) {
       for (String i: stringLit) {
         String token = i.replace(" ", "#SPC");
-        aux = aux.replace(i, token);
+        aux = aux.replace(i, " "+token+" ");
       }
     }
 
@@ -65,6 +65,10 @@ public class Line {
 
     String newLine = "";
     for (String word: words) {
+      if(word.charAt(0)=='$'&&word.charAt(word.length()-1)=='$') {
+        newLine += word;
+        continue;
+      }
       for (char op: operators) {
         word = word.replace(op+"", " "+op+" ");
       }
@@ -107,7 +111,7 @@ public class Line {
 
     String arr[] = new String[list.size()];
     for (int i=0; i<arr.length; i++) {
-      arr[i] = list.get(i);
+      arr[i] = "$"+list.get(i)+"$";
     }
     return arr;
   }

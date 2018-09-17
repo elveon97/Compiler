@@ -1,1 +1,11 @@
 INT a, b
+READ b
+
+BOOLEAN c
+READ C
+
+
+
+REAL a12, a13, asdas456
+read a12
+READ asdas456

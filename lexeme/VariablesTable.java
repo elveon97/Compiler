@@ -55,7 +55,21 @@ public class VariablesTable {
     aux = aux.trim();
     System.out.println(aux);
 
-    String vars[] = aux.split(",");
+    String vars[][] = getAssignations(aux);
+
+    for (String[] i: vars) {
+      if (variableExists(i[0])) {
+        ErrorHandler.addError(index, 2, i[0]);
+        continue;
+      }
+      if (i[1] == null) {
+        variables.add(new Register(++count, type, i[0].trim(), "", true));
+      } else {
+        variables.add(new Register(++count, type, i[0].trim(), i[1].trim(), false));
+      }
+    }
+
+    /*
     for (String i: vars) {
       i = i.trim();
       System.out.println(i);
@@ -64,9 +78,45 @@ public class VariablesTable {
         ErrorHandler.addError(index, 2, arrAux[0]);
         continue;
       }
-      if (arrAux.length == 1) variables.add(new Register(++count, type, arrAux[0].trim(), "", true));
-      else variables.add(new Register(++count, type, arrAux[0].trim(), arrAux[1].trim(), false));
+      if (arrAux.length == 1) { // VAR
+        variables.add(new Register(++count, type, arrAux[0].trim(), "", true));
+      }
+      else { // VAR = VALUE
+        variables.add(new Register(++count, type, arrAux[0].trim(), arrAux[1].trim(), false));
+      }
+    }*/
+  }
+
+  private static String[][] getAssignations(String assignation) {
+    java.util.Scanner br = new java.util.Scanner(assignation);
+
+    String token;
+    ArrayList<String> assignations = new ArrayList<String>();
+    String aux = "";
+    while (br.hasNext()) {
+      token = br.next();
+      if (token.equals(",")) {
+        assignations.add(aux);
+        aux = "";
+      } else {
+        aux += token+" ";
+      }
     }
+    assignations.add(aux);
+
+    String arr[][] = new String[assignations.size()][2];
+    for (int i=0; i<arr.length; i++) {
+      String aux2 = assignations.get(i);
+      br = new java.util.Scanner(aux2);
+
+      arr[i][0] = br.next();
+      arr[i][1] = null;
+      if (br.hasNext()) {
+        br.next();
+        arr[i][1] = br.next();
+      }
+    }
+    return arr;
   }
 
   public void printTable() {

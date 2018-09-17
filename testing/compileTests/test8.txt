@@ -1,0 +1,2 @@
+INT var1, var2
+PRINT ($Var1 = %v, Var2 = %v, Var3 = %v$, var1, var2)

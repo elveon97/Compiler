@@ -6,10 +6,14 @@ public class ErrorHandler {
   private static ArrayList<String> errors;
   private static String[] errorsArr = {"ERROR #1: Incorrect variable declaration",
       "ERROR #2: Variable (VARNAME) is already declared",
-      "ERROR #3: Variable (VARNAME) is not defined",
+      "ERROR #3: Token (VARNAME) is not defined",
       "ERROR #4: Incorrect assignment for (VARNAME)",
       "ERROR #5: Incorrect READ intruction syntax",
-      "ERROR #6: Unable to READ variable (VARNAME): its not defined"};
+      "ERROR #6: Unable to READ variable (VARNAME): its not defined",
+      "ERROR #5: Incorrect READ intruction syntax",
+      "ERROR #7: Unable to PRINT variable (VARNAME): its not defined",
+      "ERROR #8: Unable to PRINT: Number of variables to print does not match "+
+      "with String expresion (there must be the same number of %v as variables to print)"};
 
   private ErrorHandler() {}
 
@@ -34,6 +38,15 @@ public class ErrorHandler {
         return;
       case 6:
         errors.add(linestr+errorsArr[5].replace("VARNAME", aux));
+        return;
+      case 7:
+        errors.add(linestr+errorsArr[6]);
+        return;
+      case 8:
+        errors.add(linestr+errorsArr[7].replace("VARNAME", aux));
+        return;
+      case 9:
+        errors.add(linestr+errorsArr[8]);
         return;
     }
   }
