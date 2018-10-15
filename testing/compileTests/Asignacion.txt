@@ -1,0 +1,8 @@
+INT int1
+STRING str1
+BOOLEAN bool1
+
+int1 = 12.5
+str1 = $Hola mundo$, bool1 = TRUE
+bool1 FALSE
+real1 = 3.1415  // La variable no está definida

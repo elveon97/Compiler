@@ -1,0 +1,17 @@
+INT int
+BOOLEAN bool
+CHAR char
+STRING str
+REAL real
+
+// CORRECTO
+int  = 100
+bool = TRUE
+str  = $Hola mundo$
+real = 3.1415
+
+// INCORRECTO
+int  = 10000000
+bool = true
+str  = $Hola mundo
+real = 3.14.15

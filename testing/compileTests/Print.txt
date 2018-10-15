@@ -1,0 +1,5 @@
+INT var1 = 100, var2 = 200
+
+PRINT (var1)
+PRINT ($Hola Mundo$)
+PRINT ($Var1 = %v$, var1)

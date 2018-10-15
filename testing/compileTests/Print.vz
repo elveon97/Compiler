@@ -1,0 +1,4 @@
+INT var1 = 100 , var2 = 200
+PRINT ( var1 )
+PRINT ( $Hola#SPCMundo$ )
+PRINT ( $Var1#SPC=#SPC%v$ , var1 )

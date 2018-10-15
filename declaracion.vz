@@ -1,0 +1,13 @@
+
+INT int1
+INT var1 , var2 = 100 , var3
+REAL var4 , var5 , var6
+CHAR var7 , var8 = 'c'
+STRING var9 = $Hola#SPCmundo$
+BOOLEAN bool1 , bool2 = TRUE , bool3
+
+INT INT
+INT WHILE
+int var10
+INT var11 , var11
+INT 456

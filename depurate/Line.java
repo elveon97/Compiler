@@ -16,7 +16,7 @@ public class Line {
   public String line, depuredLine;
   private static ArrayList<Line> lines = new ArrayList<Line>();
   private int index;
-  char operators[] = {'+', '-', '/', '*', '>', '<', '=', '{', '}',
+  char operators[] = {'+', '/', '*', '>', '<', '=', '{', '}',
                       '(', ')', ','};
   static int globalIndex = 0;
 
@@ -50,42 +50,66 @@ public class Line {
     System.out.println("Depuring line #"+index+"...");
 
     String aux = line;
+
+    /**
+     *  This segment separates the String literals, making sure there wont be
+     *  any conflicts when the line is separated by spaces. To do this, every space
+     *  in a String literal is replaced by '#SPC'.
+     */
     String stringLit[] = getStringLiterals(aux);
-    if (stringLit != null) {
+    if (stringLit != null) { // Check if there are no String literals in the line
       for (String i: stringLit) {
-        String token = i.replace(" ", "#SPC");
-        aux = aux.replace(i, " "+token+" ");
+        String token = i.replace(" ", "#SPC"); // Replace every space in String literal
+        aux = aux.replace(i, " "+token+" "); // Replace string literals in the line
       }
     }
 
+    // This segment splits the line by spaces
     String words[] = aux.split(" ");
     for (int i=0; i<words.length; i++) {
-      words[i] = words[i].trim();
+      words[i] = words[i].trim(); // Trims the exceding spaces at the start or end of the token
     }
 
+    /**
+     *  This segment depurates every token of the line. To do this, every operator
+     *  is prefixed and sufixed by a blank space.
+     */
     String newLine = "";
     for (String word: words) {
+      if (word.trim().equals("")) continue; // If the token is an empty String, continue with the next token
+      System.out.println(word);
+
+      // If the token is a String literal, add it to the new line and continue with the next token
       if(word.charAt(0)=='$'&&word.charAt(word.length()-1)=='$') {
         newLine += word;
         continue;
       }
+      // Replace every operator by itself, but sufixed and prefixed by a blank space
       for (char op: operators) {
         word = word.replace(op+"", " "+op+" ");
       }
+      // Add the new depured token to the new line
       newLine += word+" ";
     }
+
+    /**
+     *  This segment removes every space in between two characters operands. This
+     *  blank spaces are put there trough the depuration process above.
+     */
     newLine = newLine.replace("*  *", "**");
     newLine = newLine.replace("/  /", "//");
     newLine = newLine.replace("=  =", "==");
     newLine = newLine.replace("<  =", "<=");
     newLine = newLine.replace(">  =", ">=");
     newLine = newLine.split("//")[0];
+
+    // This segment is to make sure every token is separated by only one blank space
     Scanner scanner = new Scanner(newLine);
     newLine = "";
     while(scanner.hasNext()) {
       newLine += scanner.next()+" ";
     }
-    depuredLine = newLine.trim();
+    depuredLine = newLine.trim(); // Assignates the new depured line
   }
 
   private static String[] getStringLiterals(String cad) {

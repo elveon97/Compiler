@@ -36,7 +36,7 @@ public class Print {
     n7.setTransitions(new Transition[]{t9});
 
     Automaton automaton = new Automaton(n1);
-    //System.out.println(automaton.evaluate(new String[]{"PRINT", "(", "$lol$", ",", "var1", ")"}));
+    System.out.println(automaton.evaluate(new String[]{"PRINT", "(", "$lol$", ")"}));
     io.serialization.Serializer.serialize(automaton, "automatons/serialized/Print.ser");
   }
 }

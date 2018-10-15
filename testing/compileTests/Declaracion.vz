@@ -1,0 +1,12 @@
+
+INT var1
+BOOLEAN bandera , bandera2
+CHAR c1234 , C1234
+STRING cad1 , cad2 , cad3 , cad4
+
+int var1
+BOOLEAN bandera bandera2
+CHAR 1char
+STRING cad1 , cad1
+REAL real1 , real2 ,
+INT int#2 , int%3

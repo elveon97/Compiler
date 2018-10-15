@@ -3,9 +3,9 @@ package lexeme;
 import java.util.regex.Pattern;
 
 public class Matcher {
-  public final static String RESERVED = "FROM|TO|IF|ELSE|PRINT|READ";
-  public final static String INTEGER = "[0-9]+?";
-  public final static String REAL = "([\\d]+?)|([\\d]+?\\.[\\d]+?)";
+  public final static String RESERVED = "FROM|TO|IF|ELSE|PRINT|READ|WHILE";
+  public final static String INTEGER = "-?[0-9]+?";
+  public final static String REAL = "-?([\\d]+?)|([\\d]+?\\.[\\d]+?)";
   public final static String VARIABLE = "[a-z|A-Z]{1}[a-z|A-Z|0-9|\\_|\\-]*";
   public final static String ARITHMETIC = "\\+|\\-|\\*|\\/";
   public final static String ASSIGNMENT = "\\=";
@@ -16,6 +16,10 @@ public class Matcher {
   public final static String VARTYPES = "INT|STRING|REAL|BOOLEAN|CHAR";
   public final static String BOOLEAN = "TRUE|FALSE";
   public final static String CHAR = "\\'[^\\\"]{1}\\'";
+
+  public static void main(String[] args) {
+    System.out.println(match("-100", "INTEGER"));
+  }
 
   public static boolean match(String word, String regex) {
     return Pattern.matches(getRegex(regex), word);

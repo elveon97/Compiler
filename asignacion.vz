@@ -1,0 +1,15 @@
+INT int
+BOOLEAN bool
+CHAR char
+STRING str
+REAL real
+
+int = 100
+bool = TRUE
+str = $Hola#SPCmundo$
+real = 3.1415
+
+int = 10000000
+bool = true
+str = $Hola mundo
+real = 3.14.15

@@ -10,10 +10,13 @@ public class ErrorHandler {
       "ERROR #4: Incorrect assignment for (VARNAME)",
       "ERROR #5: Incorrect READ intruction syntax",
       "ERROR #6: Unable to READ variable (VARNAME): its not defined",
-      "ERROR #5: Incorrect READ intruction syntax",
-      "ERROR #7: Unable to PRINT variable (VARNAME): its not defined",
-      "ERROR #8: Unable to PRINT: Number of variables to print does not match "+
-      "with String expresion (there must be the same number of %v as variables to print)"};
+      "ERROR #7: Incorrect PRINT intruction syntax",
+      "ERROR #8: Unable to PRINT variable (VARNAME): its not defined",
+      "ERROR #9: Unable to PRINT: Number of variables to print does not match "+
+      "with String expresion (there must be the same number of %v as variables to print)",
+      "ERROR #10: Value out of range for variable (VARNAME)",
+      "ERROR #11: Missing closing symbol for VARNAME",
+      "ERROR #12: Missing opening symbol for VARNAME"};
 
   private ErrorHandler() {}
 
@@ -47,6 +50,15 @@ public class ErrorHandler {
         return;
       case 9:
         errors.add(linestr+errorsArr[8]);
+        return;
+      case 10:
+        errors.add(linestr+errorsArr[9].replace("VARNAME", aux));
+        return;
+      case 11:
+        errors.add(linestr+errorsArr[10].replace("VARNAME", aux));
+        return;
+      case 12:
+        errors.add(linestr+errorsArr[11].replace("VARNAME", aux));
         return;
     }
   }

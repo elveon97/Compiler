@@ -1,0 +1,3 @@
+INT var1
+READ var1
+read var1

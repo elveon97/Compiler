@@ -28,18 +28,21 @@ public class Analyser {
    *  @param line Line onject to analyse
    */
   public static void Analyse(Line line) {
-    String arr[] = line.getDepuredLine().split(" ");
-    System.out.println();
-    System.out.print("ANALYSING: ");
+    String depuredLine = line.getDepuredLine();
+    int row = line.getIndex();
+    String arr[] = depuredLine.split(" ");
+
+    System.out.print("\nANALYSING: ");
     for (String i: arr) {
       System.out.print(i+" ");
     }
     System.out.println();
 
+    Stack.getInstance().analyseLine(depuredLine, row);
     for (String i: arr) {
       Lexeme lexeme = LexemeFactory.getLexeme(i);
       System.out.println(lexeme);
-      LexemeTable.getInstance().addLexeme(line.getIndex(), lexeme);
+      LexemeTable.getInstance().addLexeme(row, lexeme);
     }
 
     String path;
@@ -50,27 +53,31 @@ public class Analyser {
         case "INT":
           System.out.println("Checking Integer declaration...");
           path = "automatons/serialized/DeclarationInt.ser";
-          checkDeclaration(path, arr, line.getIndex());
+          if (checkDeclaration(path, arr, row)) {
+            analizeInt(arr, row);
+          }
           return;
         case "REAL":
           System.out.println("Checking Real declaration...");
           path = "automatons/serialized/DeclarationReal.ser";
-          checkDeclaration(path, arr, line.getIndex());
+          if (checkDeclaration(path, arr, row)) {
+            analizeReal(arr, row);
+          }
           return;
         case "BOOLEAN":
           System.out.println("Checking Boolean declaration...");
           path = "automatons/serialized/DeclarationBoolean.ser";
-          checkDeclaration(path, arr, line.getIndex());
+          checkDeclaration(path, arr, row);
           return;
         case "STRING":
           System.out.println("Checking String declaration...");
           path = "automatons/serialized/DeclarationString.ser";
-          checkDeclaration(path, arr, line.getIndex());
+          checkDeclaration(path, arr, row);
           return;
         case "CHAR":
           System.out.println("Checking String declaration...");
           path = "automatons/serialized/DeclarationChar.ser";
-          checkDeclaration(path, arr, line.getIndex());
+          checkDeclaration(path, arr, row);
           return;
       }
     }
@@ -82,20 +89,20 @@ public class Analyser {
         case "READ":
           System.out.println("Checking READ...");
           path = "automatons/serialized/Read.ser";
-          if (checkRead(path, arr, line.getIndex())) {
+          if (checkRead(path, arr, row)) {
             if (VariablesTable.getInstance().variableExists(arr[1])) {
               // AQUI SE LEE LA VARIABLE
             } else {
-              ErrorHandler.addError(line.getIndex(), 6, arr[1]);
+              ErrorHandler.addError(row, 6, arr[1]);
             }
           }
           return;
         case "PRINT":
           System.out.println("Checking PRINT...");
           path = "automatons/serialized/Print.ser";
-          if (checkPrint(path, arr, line.getIndex())) {
+          if (checkPrint(path, arr, row)) {
             // ANALIZAR EXPRESION DE PRINT
-            analysePrint(arr, line.getIndex());
+            analysePrint(arr, row);
           }
           return;
       }
@@ -107,50 +114,64 @@ public class Analyser {
         switch (VariablesTable.getInstance().getVariableType(arr[0])) {
           case "INT":
             path = "automatons/serialized/AssignationInt.ser";
-            checkAssignation(path, arr, line.getIndex());
+            checkAssignation(path, arr, row);
             break;
           case "REAL":
             path = "automatons/serialized/AssignationReal.ser";
-            checkAssignation(path, arr, line.getIndex());
+            checkAssignation(path, arr, row);
             break;
           case "BOOLEAN":
             path = "automatons/serialized/AssignationBoolean.ser";
-            checkAssignation(path, arr, line.getIndex());
+            checkAssignation(path, arr, row);
             break;
           case "STRING":
             path = "automatons/serialized/AssignationString.ser";
-            checkAssignation(path, arr, line.getIndex());
+            checkAssignation(path, arr, row);
             break;
           case "CHAR":
             path = "automatons/serialized/AssignationChar.ser";
-            checkAssignation(path, arr, line.getIndex());
+            checkAssignation(path, arr, row);
             break;
         }
       } else {
-        ErrorHandler.addError(line.getIndex(), 3, arr[0]);
+        ErrorHandler.addError(row, 3, arr[0]);
       }
     }
   }
 
-  private static void checkDeclaration(String path, String[] arr, int line) {
+  private static boolean checkDeclaration(String path, String[] arr, int line) {
     Automaton automaton = (Automaton) Deserializer.deserializeObject(path);
     if (automaton.evaluate(arr)) {
       System.out.println("CORRECT DECLARATION");
       if (VariablesTable.getInstance().variableExists(arr[0])) {
         ErrorHandler.addError(line, 2, arr[0]);
-        return;
+        return true;
       }
       VariablesTable.getInstance().addVariables(arr, line);
+      return true;
     }
     else  {
       System.out.println("INCORRECT DECLARATION");
       ErrorHandler.addError(line, 1, arr[0]);
+      return false;
     }
   }
 
   private static void checkAssignation(String path, String[] arr, int line) {
     Automaton automaton = (Automaton) Deserializer.deserializeObject(path);
     if (automaton.evaluate(arr)) {
+      if (VariablesTable.getInstance().getVariableType(arr[0]).equals("INT")) {
+        if (Integer.parseInt(arr[2])<-32_768 || Integer.parseInt(arr[2])>32_767) {
+          ErrorHandler.addError(line, 10, arr[0]);
+          return;
+        }
+      }
+      if (VariablesTable.getInstance().getVariableType(arr[0]).equals("REAL")) {
+        if (Double.parseDouble(arr[2])<-32_768 || Double.parseDouble(arr[2])>32_767) {
+          ErrorHandler.addError(line, 10, arr[0]);
+          return;
+        }
+      }
       System.out.println("CORRECT ASSIGNMENT");
       VariablesTable.getInstance().setValue(arr[0], arr[2]);
     }
@@ -188,6 +209,7 @@ public class Analyser {
 
   private static void analysePrint(String[] arr, int line) {
     if (arr.length == 4) { // PRINT (X)
+      if (Matcher.match(arr[2], "STRING")) return;
       if (!VariablesTable.variableExists(arr[2])) {
         ErrorHandler.addError(line, 8, arr[2]);
       }
@@ -204,6 +226,28 @@ public class Analyser {
         if (!VariablesTable.getInstance().variableExists(arr[i])) {
           ErrorHandler.addError(line, 8, arr[i]);
         }
+      }
+    }
+  }
+
+  private static void analizeInt(String[] arr, int line) {
+    for (int i = 3; i<arr.length; i++) {
+      if (!Matcher.match(arr[i], "INTEGER")) continue;
+      int aux = Integer.parseInt(arr[i]);
+      if (aux < -32_768 || aux > 32_767) {
+        ErrorHandler.addError(line, 10, arr[i-2]);
+        return;
+      }
+    }
+  }
+
+  private static void analizeReal(String[] arr, int line) {
+    for (int i = 3; i<arr.length; i++) {
+      if (!Matcher.match(arr[i], "REAL")) continue;
+      double aux = Double.parseDouble(arr[i]);
+      if (aux < -32_768.0 || aux > 32_767.0) {
+        ErrorHandler.addError(line, 10, arr[i-2]);
+        return;
       }
     }
   }
